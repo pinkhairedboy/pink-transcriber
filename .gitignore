@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Project specific
+pink-transcriber.sock
+models/
+*.ogg
+*.wav
+*.mp3
+*.log
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

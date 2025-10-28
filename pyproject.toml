@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pink-transcriber"
+version = "1.0.0"
+description = "High-performance voice transcription service for macOS using NVIDIA Parakeet TDT v3"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.12,<3.13"
+authors = [
+    {name = "Pink Transcribe Team"}
+]
+keywords = ["transcription", "speech-to-text", "asr", "parakeet", "nemo"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+]
+
+# IMPORTANT: This project ONLY works with Python 3.12.x
+# NeMo Toolkit or Parakeet model incompatible with Python 3.13+
+
+dependencies = [
+    "nemo_toolkit[asr]==2.5.0",
+    "torch==2.9.0",
+    "soundfile==0.13.1",
+    "setproctitle>=1.3.0",
+]
+
+[project.scripts]
+pink-transcriber = "pink_transcriber.client:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
