@@ -88,13 +88,19 @@ def main() -> None:
         action='store_true',
         help='Check if transcription server is running'
     )
+    parser.add_argument(
+        '--socket',
+        default=None,
+        help='Path to Unix socket (default: ./pink-transcriber.sock)'
+    )
 
     args = parser.parse_args()
 
-    # Resolve socket path (project root, not src/pink_transcriber/)
-    script_path = Path(__file__).resolve()
-    project_root = script_path.parent.parent.parent
-    socket_path = project_root / "pink-transcriber.sock"
+    # Socket path: use provided or default to /tmp
+    if args.socket:
+        socket_path = Path(args.socket)
+    else:
+        socket_path = Path("/tmp/pink-transcriber.sock")
 
     # Health check
     if args.health:

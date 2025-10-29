@@ -35,6 +35,7 @@ dependencies = [
 
 [project.scripts]
 pink-transcriber = "pink_transcriber.client:main"
+pink-transcriber-server = "pink_transcriber.server:cli_main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

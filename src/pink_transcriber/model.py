@@ -45,8 +45,6 @@ def load_model(project_root: Path) -> None:
         # Load model
         if DEV_MODE:
             print("Loading Parakeet TDT v3 model...", flush=True)
-        else:
-            print("Loading model...")
 
         _model = nemo_asr.models.ASRModel.from_pretrained(
             "nvidia/parakeet-tdt-0.6b-v3"

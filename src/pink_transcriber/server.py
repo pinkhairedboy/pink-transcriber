@@ -33,9 +33,10 @@ async def main() -> None:
         print("="*50, flush=True)
         print("", flush=True)
 
-    # Socket path
+    # Models in project directory (editable install keeps code in place)
+    # Socket in /tmp for global access
     project_root = Path(__file__).resolve().parent.parent.parent
-    socket_path = project_root / "pink-transcriber.sock"
+    socket_path = Path("/tmp/pink-transcriber.sock")
 
     # Remove old socket if exists
     if socket_path.exists():
@@ -64,8 +65,7 @@ async def main() -> None:
         print("Ready to accept requests. Press Ctrl+C to stop.", flush=True)
         print("", flush=True)
     else:
-        print(f"Server ready on {model.get_device()}")
-        print("Listening for requests (press Ctrl+C to stop)")
+        print(f"Ready ({model.get_device()})", flush=True)
 
     # Shutdown flag
     shutdown_event = asyncio.Event()
@@ -75,8 +75,6 @@ async def main() -> None:
     def signal_handler(sig: int, frame: Any) -> None:
         if DEV_MODE:
             print("\n\nShutting down gracefully...", flush=True)
-        else:
-            print("\nShutting down server")
         loop.call_soon_threadsafe(shutdown_event.set)
 
     signal.signal(signal.SIGINT, signal_handler)
@@ -117,5 +115,10 @@ async def main() -> None:
         raise
 
 
-if __name__ == "__main__":
+def cli_main() -> None:
+    """CLI entry point wrapper."""
     asyncio.run(main())
+
+
+if __name__ == "__main__":
+    cli_main()
