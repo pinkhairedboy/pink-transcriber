@@ -50,8 +50,15 @@ def load_model(project_root: Path) -> None:
             "nvidia/parakeet-tdt-0.6b-v3"
         )
 
-        # Use MPS (Metal) if available, otherwise CPU
-        if torch.backends.mps.is_available():
+        # Use CUDA if available, then MPS (Metal), otherwise CPU
+        if torch.cuda.is_available():
+            try:
+                _model = _model.to('cuda')
+                _device = 'CUDA'
+            except Exception:
+                _model = _model.to('cpu')
+                _device = 'CPU'
+        elif torch.backends.mps.is_available():
             try:
                 _model = _model.to('mps')
                 _device = 'MPS'
